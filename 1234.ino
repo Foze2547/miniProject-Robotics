@@ -3,9 +3,9 @@
 
 int trigPin = 10;
 int echoPin = 11;
-int ledPin1 = 5;
-int ledPin2 = 6;
-int ledPin3 = 7;
+int ledPinR = 5;
+int ledPinY = 6;
+int ledPinG = 7;
 int buzzerPin = 12;
 int rainSensorPin = A0;
 
@@ -37,12 +37,15 @@ Servo myServo;
 void setup() {
   // เริ่มต้นค่า LDR sensor และ servo motor
   pinMode(ldrPin, INPUT);
-  myServo.attach(servoPin);
+  myServo.attach(servoPin1);
+  myServo.attach(servoPin2);
   myServo.write(45);
 
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  pinMode(ledPin1, OUTPUT);
+  pinMode(ledPinR, OUTPUT);
+  pinMode(ledPinY, OUTPUT);
+  pinMode(ledPinG, OUTPUT);
   pinMode(buzzerPin, OUTPUT);
 
   // กำหนด pinMode และเปิดการใช้งาน debounce สำหรับ push button
@@ -54,7 +57,8 @@ void setup() {
   pinMode(pirPin, INPUT);
 
   // กำหนดให้ขา Servo เป็น Output
-  myServo.attach(servoPin);
+  myServo.attach(servoPin1);
+  myServo.attach(servoPin2);
 
   // เปิด Serial communication สำหรับ debugging
   Serial.begin(9600);
@@ -97,13 +101,19 @@ void loop() {
 
   // ควบคุม LED ด้วยค่าความสว่าง
   if (light_value < 500) {
-    digitalWrite(ledPin1, HIGH);
+    digitalWrite(ledPinR, HIGH);
+    digitalWrite(ledPinY, HIGH);
+    digitalWrite(ledPinG, HIGH);
   } else {
-    digitalWrite(ledPin1, LOW);
+    digitalWrite(ledPinR, LOW);
+    digitalWrite(ledPinY, LOW);
+    digitalWrite(ledPinG, LOW);
   }
   // ถ้ามีน้ำท่วมเกินค่าที่กำหนด
   if (distance <= minimumDistance && rainValue >= maximumRainValue) {
-    digitalWrite(ledPin1, HIGH); // เปิด LED
+    digitalWrite(ledPinR, HIGH); // เปิด LED
+    digitalWrite(ledPinY, HIGH);
+    digitalWrite(ledPinG, HIGH);
     tone(buzzerPin, 1000); // เล่นเสียง Buzzer
     delay(500);
     noTone(buzzerPin);
@@ -111,16 +121,22 @@ void loop() {
     myServo.write(90); // หมุน Servo ไปที่มุม 90 องศา
   }
   else {
-    digitalWrite(ledPin1, LOW); // ปิด LED
+    digitalWrite(ledPinR, LOW); // ปิด LED
+    digitalWrite(ledPinY, LOW);
+    digitalWrite(ledPinG, LOW);
     myServo.write(0); // หมุน Servo ไปที่มุม 0 องศา
   }
   // ถ้ามีการกด push button
   if (button.fell()) {
     // หยุดการทำงานทั้งหมด
     while (true) {
-      digitalWrite(ledPin1, HIGH);
+      digitalWrite(ledPinR, HIGH);
+      digitalWrite(ledPinY, HIGH);
+      digitalWrite(ledPinG, HIGH);
       delay(500);
-      digitalWrite(ledPin1, LOW);
+      digitalWrite(ledPinR, LOW);
+      digitalWrite(ledPinY, LOW);
+      digitalWrite(ledPinG, LOW);
       delay(500);
     }
   }
@@ -130,7 +146,8 @@ void loop() {
   }
   // ถ้าไม่ตรวจพบการเคลื่อนไหว กำหนดให้ Servo เคลื่อนไหวตามปกติ
   else {
-    myServo.attach(servoPin);
+    myServo.attach(servoPin1);
+    myServo.attach(servoPin2);
     myServo.write(90);
     delay(1000);
     myServo.write(0);
