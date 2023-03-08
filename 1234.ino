@@ -1,15 +1,18 @@
 #include <Servo.h>
 #include <Bounce2.h>
 
-#define trigPin 10
-#define echoPin 11
-#define ledPin 12
-#define buzzerPin 8
-#define rainSensorPin A0
+int trigPin = 10;
+int echoPin = 11;
+int ledPin1 = 5;
+int ledPin2 = 6;
+int ledPin3 = 7;
+int buzzerPin = 12;
+int rainSensorPin = A0;
 
 // กำหนดพินสำหรับ LDR sensor และ servo motor
 const int ldrPin = A1;
-const int servoPin = 9;
+const int servoPin1 = 8;
+const int servoPin2 = 9;
 
 // กำหนดค่าคงที่สำหรับอ่านค่า LDR
 const int min_light = 0;
@@ -23,7 +26,7 @@ int maximumRainValue = 300; // ค่าอ่านของ Rain Sensor ที
 const int buttonPin = 2;
 
 // กำหนดตัวแปรเก็บขา PIR Sensor
-int pirPin = 2;
+int pirPin = 3;
 
 // สร้าง object ของ library Bounce
 Bounce button = Bounce();
@@ -39,7 +42,7 @@ void setup() {
 
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  pinMode(ledPin, OUTPUT);
+  pinMode(ledPin1, OUTPUT);
   pinMode(buzzerPin, OUTPUT);
 
   // กำหนด pinMode และเปิดการใช้งาน debounce สำหรับ push button
@@ -94,13 +97,13 @@ void loop() {
 
   // ควบคุม LED ด้วยค่าความสว่าง
   if (light_value < 500) {
-    digitalWrite(ledPin, HIGH);
+    digitalWrite(ledPin1, HIGH);
   } else {
-    digitalWrite(ledPin, LOW);
+    digitalWrite(ledPin1, LOW);
   }
   // ถ้ามีน้ำท่วมเกินค่าที่กำหนด
   if (distance <= minimumDistance && rainValue >= maximumRainValue) {
-    digitalWrite(ledPin, HIGH); // เปิด LED
+    digitalWrite(ledPin1, HIGH); // เปิด LED
     tone(buzzerPin, 1000); // เล่นเสียง Buzzer
     delay(500);
     noTone(buzzerPin);
@@ -108,16 +111,16 @@ void loop() {
     myServo.write(90); // หมุน Servo ไปที่มุม 90 องศา
   }
   else {
-    digitalWrite(ledPin, LOW); // ปิด LED
+    digitalWrite(ledPin1, LOW); // ปิด LED
     myServo.write(0); // หมุน Servo ไปที่มุม 0 องศา
   }
   // ถ้ามีการกด push button
   if (button.fell()) {
     // หยุดการทำงานทั้งหมด
     while (true) {
-      digitalWrite(ledPin, HIGH);
+      digitalWrite(ledPin1, HIGH);
       delay(500);
-      digitalWrite(ledPin, LOW);
+      digitalWrite(ledPin1, LOW);
       delay(500);
     }
   }
