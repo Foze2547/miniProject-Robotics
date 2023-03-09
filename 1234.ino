@@ -23,10 +23,10 @@ int maximumDistance = 100; // ระยะสูงสุดที่ตรว�
 int maximumRainValue = 300; // ค่าอ่านของ Rain Sensor ที่ถือว่าเป็นฝนตก
 
 // กำหนดชื่อพอร์ตที่เชื่อมต่อ push button
-const int buttonPin = 2;
+const int buttonPin = 4;
 
 // กำหนดตัวแปรเก็บขา PIR Sensor
-int pirPin = 3;
+int pirPin = 13;
 
 // สร้าง object ของ library Bounce
 Bounce button = Bounce();
