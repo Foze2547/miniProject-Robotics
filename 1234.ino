@@ -17,7 +17,7 @@ int ldrSensorPin = A1;
 
 int buttonPin = 4;
 
-//boolean prevBtnStatus = LOW;
+boolean prevBtnStatus = LOW;
 
 void setup() {
   pinMode(ledPinRed, OUTPUT);
@@ -45,13 +45,32 @@ void OpenLEDYellow(bool Yellow){
 void OpenLEDGreen(bool Green){
   digitalWrite(ledPinGreen, Green);
 }
+//ไฟกระพริบ
+void TwinkleLED(){
+  digitalWrite(ledPinGreen, HIGH);
+  delay(100);
+  digitalWrite(ledPinGreen, LOW);
+  delay(100);
+  digitalWrite(ledPinYellow, HIGH);
+  delay(100);
+  digitalWrite(ledPinYellow, LOW);
+  delay(100);
+  digitalWrite(ledPinRed, HIGH);
+  delay(100);
+  digitalWrite(ledPinRed, LOW);
+  delay(100);
+}
 void Buzzer(){
+  digitalWrite(buzzerPin, HIGH);
+  delay(100);
+  digitalWrite(buzzerPin, LOW);
+  delay(100);
 }
 
 long microsecondsToCentimeters(long microseconds){
   return microseconds / 29 / 2;
 }
-void UltrasonicSensor() {
+long UltrasonicSensor() {
   long duration, distance;
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -66,9 +85,10 @@ void UltrasonicSensor() {
   Serial.print(distance);
   Serial.println(" cm");
   delay(500);
+  return distance;
 }
 
-void CheckPIR(int pirSensorPin){
+void CheckPIR(){
   if (digitalRead(pirSensorPin) == HIGH) {
     Serial.println("Motion detected!");
     delay(100);
@@ -79,30 +99,20 @@ void CheckPIR(int pirSensorPin){
   }
 }
 
-void CheckRain(int rainSensorPin){
+int CheckRain(){
   int valueRain = analogRead(rainSensorPin);
   Serial.print("Rain Sensor value: ");
   Serial.println(valueRain);
   delay(100);
-  //if(value <= 180){
-  //  digitalWrite(ledPinRed, HIGH);
-  //  digitalWrite(ledPinYellow, HIGH);
-  //  digitalWrite(ledPinGreen, HIGH);
-  //  digitalWrite(buzzerPin, HIGH);
-  //}
-  //else{
-  //  digitalWrite(ledPinRed, LOW);
-  //  digitalWrite(ledPinYellow, LOW);
-  //  digitalWrite(ledPinGreen, LOW);
-  //  digitalWrite(buzzerPin, LOW);
-  //}
+  return valueRain;
 }
 
-void CheckLDR(int ldrSensorPin){
+int CheckLDR(){
   int valueLDR = analogRead(ldrSensorPin);
   Serial.print("LDR Sensor Value = ");
   Serial.println(valueLDR);
   delay(500);
+  return valueLDR;
 }
 
 void EmergencyStop(){
@@ -111,13 +121,22 @@ void EmergencyStop(){
   OpenLEDGreen(false);
 }
 
-void ButtomSwitch() {
+void ButtomSwitch(){
   boolean btnStatus = digitalRead(buttonPin);
   if (btnStatus == HIGH && prevBtnStatus == LOW) {
     EmergencyStop();
     delay(200);
   }
   //prevBtnStatus = btnStatus;
+}
+
+//น้ำท่วม
+void Water(){
+  if(CheckRain()<=400 and UltrasonicSensor()<=8){
+    TwinkleLED();
+    Buzzer();
+  }
+
 }
 
 void loop(){
