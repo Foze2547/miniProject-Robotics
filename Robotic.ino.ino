@@ -196,6 +196,9 @@ void ButtomSwitch(){
   if (btnStatus == HIGH && prevBtnStatus == LOW) {
     EmergencyStop();
     delay(200);
+    while(true){ // วน loop ไว้เพื่อให้โปรแกรมหยุดการทำงานที่นี่
+      delay(1000); // delay ไว้เพื่อลดการใช้งาน CPU
+    }
   }
   //prevBtnStatus = btnStatus;
 }
@@ -224,24 +227,24 @@ void OpenLEDGreen(bool Green){
 //ไฟกระพริบ
 void TwinkleLED(){
   digitalWrite(ledPinGreen, HIGH);
-  delay(100);
+  delay(10);
   digitalWrite(ledPinGreen, LOW);
-  delay(100);
+  delay(10);
   digitalWrite(ledPinYellow, HIGH);
-  delay(100);
+  delay(10);
   digitalWrite(ledPinYellow, LOW);
-  delay(100);
+  delay(10);
   digitalWrite(ledPinRed, HIGH);
-  delay(100);
+  delay(10);
   digitalWrite(ledPinRed, LOW);
-  delay(100);
+  delay(10);
 }
 
 void Buzzer(){
   digitalWrite(buzzerPin, HIGH);
   delay(100);
   digitalWrite(buzzerPin, LOW);
-  delay(100);
+  delay(1);
 }
 
 void setup() {
@@ -266,29 +269,35 @@ void setup() {
 
 
 void loop() {
+  ButtomSwitch();
   while (Serial.available()) // whatever the data that is coming in serially and assigning the value to the variable “data”
   {
       data = Serial.read();
   }
+  ButtomSwitch();
   delay(1500);
   if (CheckLDR() >= 200 && servo == false){
+    ButtomSwitch();
     delay(1000);
     B(servo);
     servo = true;
   }
   if (CheckLDR() < 200 && servo == true){
+    ButtomSwitch();
     A(servo);
     servo = false;
   }
   if (CheckLDR() < 200){
     if(data == 'A'){
       delay(1500);
+      ButtomSwitch();
       data = Serial.read();
       if(data == 'A'){
         A(servo);
       }
     }
     if(data == 'B'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'B'){
@@ -296,6 +305,7 @@ void loop() {
       }
     }
     if(data == 'C'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'C'){
@@ -303,6 +313,7 @@ void loop() {
       }
     }
     if(data == 'D'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'D'){
@@ -310,6 +321,7 @@ void loop() {
       }
     }
     if(data == 'E'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'E'){
@@ -317,6 +329,7 @@ void loop() {
       }
     }
     if(data == 'F'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'F'){
@@ -324,6 +337,7 @@ void loop() {
       }
     }
     if(data == 'G'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'G'){
@@ -331,6 +345,7 @@ void loop() {
       }
     }
     if(data == 'H'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'H'){
@@ -338,6 +353,7 @@ void loop() {
       }
     }
     if(data == 'I'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'I'){
@@ -345,6 +361,7 @@ void loop() {
       }
     }
     if(data == 'J'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'J'){
@@ -352,6 +369,7 @@ void loop() {
       }
     }
     if(data == 'K'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'K'){
@@ -359,6 +377,7 @@ void loop() {
       }
     }
     if(data == 'L'){
+      ButtomSwitch();
       delay(1500);
       data = Serial.read();
       if(data == 'L'){
@@ -366,15 +385,18 @@ void loop() {
       }
     }
   }
+  if(CheckRain()>400 and UltrasonicSensor()>8){
+    ButtomSwitch();
+    watervo = false;
+  }
   if(CheckRain()<=400 and UltrasonicSensor()<=8){
+    ButtomSwitch();
     TwinkleLED();
     Buzzer();
     if(watervo == false){
-      B(servo);
-      watervo = true;      
+      C(servo);
     }
-  }
-  if(CheckRain()>400 and UltrasonicSensor()>8){
-    watervo = false;
+    watervo = true;      
+    
   }
 }
