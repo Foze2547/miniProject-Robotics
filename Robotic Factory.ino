@@ -10,7 +10,6 @@ int buzzerPin = 12;
 int trigPin = 10;
 int echoPin = 11;
 
-int pirSensorPin = 13;
 
 int rainSensorPin = A0;
 
@@ -27,6 +26,7 @@ const int servoPin2 = 9;
 // สร้างอ็อบเจ็กต์สำหรับ Servo
 Servo myServo1;
 Servo myServo2;
+int btnState = 0;
 bool servo = false;
 bool watervo = false;
 bool Door = false;
@@ -158,17 +158,6 @@ long microsecondsToCentimeters(long microseconds){
   return microseconds / 29 / 2;
 }
 
-void CheckPIR(){
-  if (digitalRead(pirSensorPin) == HIGH) {
-    Serial.println("Motion detected!");
-    delay(100);
-  }
-  else {
-    Serial.println("No motion detected.");
-    delay(100);
-  }
-}
-
 int CheckRain(){
   int valueRain = analogRead(rainSensorPin);
   Serial.print("Rain Sensor value: ");
@@ -263,7 +252,6 @@ void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 
-  pinMode(pirSensorPin, INPUT);
   pinMode(ldrSensorPin, INPUT);
   pinMode(buttonPin, INPUT);
 
@@ -278,16 +266,14 @@ void loop() {
   {
       data = Serial.read();
   }
-  boolean btnState = digitalRead(buttonPin);
-  delay(1500);
-  if (CheckLDR() >= 200 && servo == false){
-    delay(1000);
-    if(btnState == HIGH and Day == true){
+  btnState = digitalRead(buttonPin);
+  if (CheckLDR() >= 200){
+    /*if(btnState == HIGH and Day == true){
       C(servo);
       servo = true;
       Door = false;
       Day = false;
-    }
+    }*/
     if(btnState == HIGH and Door == false){
       B(servo);
       digitalWrite(ledPinGreen, HIGH);
@@ -307,13 +293,13 @@ void loop() {
       Day = false;
     }
   }
-  if (CheckLDR() < 200 && servo == true){
-    if(btnState == HIGH and Day == true){
+  if (CheckLDR() < 200){
+    /*if(btnState == HIGH and Day == true){
       A(servo);
       servo = true;
       Door = false;
       Day = false;
-    }
+    }*/
     if(btnState == HIGH and Door == false){
       C(servo);
       digitalWrite(ledPinGreen, HIGH);
@@ -333,12 +319,14 @@ void loop() {
       Day = false;
     }
   }
-  if (CheckLDR() < 200){
     if(data == 'A'){
       delay(1500);
       data = Serial.read();
       if(data == 'A'){
         A(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);        
       }
     }
     if(data == 'B'){
@@ -346,6 +334,9 @@ void loop() {
       data = Serial.read();
       if(data == 'B'){
         B(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'C'){
@@ -353,6 +344,9 @@ void loop() {
       data = Serial.read();
       if(data == 'C'){
         C(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'D'){
@@ -360,6 +354,9 @@ void loop() {
       data = Serial.read();
       if(data == 'D'){
         D(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'E'){
@@ -367,6 +364,9 @@ void loop() {
       data = Serial.read();
       if(data == 'E'){
         E(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'F'){
@@ -374,6 +374,9 @@ void loop() {
       data = Serial.read();
       if(data == 'F'){
         S(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'G'){
@@ -381,6 +384,9 @@ void loop() {
       data = Serial.read();
       if(data == 'G'){
         G(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'H'){
@@ -388,6 +394,9 @@ void loop() {
       data = Serial.read();
       if(data == 'H'){
         H(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'I'){
@@ -395,6 +404,9 @@ void loop() {
       data = Serial.read();
       if(data == 'I'){
         I(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'J'){
@@ -402,6 +414,9 @@ void loop() {
       data = Serial.read();
       if(data == 'J'){
         J(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'K'){
@@ -409,6 +424,9 @@ void loop() {
       data = Serial.read();
       if(data == 'K'){
         K(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
     if(data == 'L'){
@@ -416,9 +434,12 @@ void loop() {
       data = Serial.read();
       if(data == 'L'){
         L(servo);
+        digitalWrite(ledPinGreen, LOW);
+        digitalWrite(ledPinRed, LOW);
+        digitalWrite(ledPinYellow, HIGH);
       }
     }
-  }
+  
   if(CheckRain()>400 and UltrasonicSensor()>8){
     watervo = false;
   }
