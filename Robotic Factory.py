@@ -104,44 +104,42 @@ with mp_hands.Hands(
                 if (handLabel == "Left" and handLandmarks[4][0] > handLandmarks[3][0]) or handLabel == "Right" and handLandmarks[4][0] < handLandmarks[3][0]:
                     if handLandmarks[8][1] < handLandmarks[6][1]:
                         if left_hand and right_hand:
-                            cv2.putText(image, "Half Open(in)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                            cv2.putText(image, "Half Open(out)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
                                         (0, 0, 0), 3)
                             x = False
                             Foze.write('A'.encode())
                             # time.sleep(3)
-                            # All Half Open(in) = A
+                            # All Half Open(out) = A
                 # 90 องศาเปิดออก
                 if (handLabel == "Left" and handLandmarks[4][0] > handLandmarks[3][0]) or handLabel == "Right" and handLandmarks[4][0] < handLandmarks[3][0]:
                     if handLandmarks[20][1] < handLandmarks[18][1]:
                         if (left_hand and right_hand):
-                            cv2.putText(image, "Open All(out)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                            cv2.putText(image, "Open All(in)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
                                         (0, 0, 0), 3)
                             x = False
                             Foze.write('B'.encode())
-                            # All Open All(out) = 2
+                            # All Open All(in) = 2
                 # 45 องศาเปิดออก
                 if handLandmarks[8][1] < handLandmarks[6][1]:
                     if handLandmarks[20][1] < handLandmarks[18][1]:
                         if (left_hand and right_hand):
-                            cv2.putText(image, "Half Open(out)", (450, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                            cv2.putText(image, "Half Open(in)", (450, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
                                         (0, 0, 0), 3)
                             x = False
                             Foze.write('C'.encode())
-                            # All Half Open(out) = 3
+                            # All Half Open(in) = 3
             # 90 องศาเปิดเข้า
             if fingerCount == 10:
                 if (left_hand and right_hand):
-                    cv2.putText(image, "Open All(in)", (490, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                    cv2.putText(image, "Open All(out)", (490, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
                                 (0, 0, 0), 3)
                     x = False
                     Foze.write('D'.encode())
-                    # All Open All(in) = 4
+                    # All Open All(out) = 4
             # ปิด
             if fingerCount == 2:
                 if handLandmarks[8][1] < handLandmarks[6][1]:
                     if (left_hand and right_hand):
-                        cv2.putText(image, "Close", (560, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
-                                    (0, 0, 0), 3)
                         x = False
                         Foze.write('z'.encode())
                         # All Close = 5
@@ -152,84 +150,78 @@ with mp_hands.Hands(
                     if handLandmarks[8][1] < handLandmarks[6][1]:
                         if not (left_hand and right_hand):
                             if right_hand:
-                                cv2.putText(image, "Half Open(in)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
-                                            (0, 0, 0), 3)
-                                x = False
-                                Foze.write('E'.encode())
-                                # Right Half Open(in) = 6
-                            elif left_hand:
-                                cv2.putText(image, "Half Open(in)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                                cv2.putText(image, "Half Open(out)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
                                             (0, 0, 0), 3)
                                 x = False
                                 Foze.write('F'.encode())
-                                # Left Half Open(in) = 7
+                                # Right Half Open(out) = 6
+                            elif left_hand:
+                                cv2.putText(image, "Half Open(out)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                                            (0, 0, 0), 3)
+                                x = False
+                                Foze.write('E'.encode())
+                                # Left Half Open(out) = 7
                 # 90 องศาเปิดออก
                 if (handLabel == "Left" and handLandmarks[4][0] > handLandmarks[3][0]) or handLabel == "Right" and handLandmarks[4][0] < handLandmarks[3][0]:
                     if handLandmarks[20][1] < handLandmarks[18][1]:
                         if not (left_hand and right_hand):
                             if right_hand:
-                                cv2.putText(image, "Open All(out)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
-                                            (0, 0, 0), 3)
-                                x = False
-                                Foze.write('G'.encode())
-                                # Right Open All(out) = 8
-                            elif left_hand:
-                                cv2.putText(image, "Open All(out)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                                cv2.putText(image, "Open All(in)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
                                             (0, 0, 0), 3)
                                 x = False
                                 Foze.write('H'.encode())
-                                # Left Open All(out) = 9
+                                # Right Open All(in) = 8
+                            elif left_hand:
+                                cv2.putText(image, "Open All(in)", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                                            (0, 0, 0), 3)
+                                x = False
+                                Foze.write('G'.encode())
+                                # Left Open All(in) = 9
                 # 45 องศาเปิดออก
                 if handLandmarks[8][1] < handLandmarks[6][1]:
                     if handLandmarks[20][1] < handLandmarks[18][1]:
                         if not (left_hand and right_hand):
                             if right_hand:
-                                cv2.putText(image, "Half Open(out)", (450, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
-                                            (0, 0, 0), 3)
-                                x = False
-                                Foze.write('I'.encode())
-                                # Right Half Open(out) = 10
-                            elif left_hand:
-                                cv2.putText(image, "Half Open(out)", (450, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                                cv2.putText(image, "Half Open(in)", (450, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
                                             (0, 0, 0), 3)
                                 x = False
                                 Foze.write('J'.encode())
-                                # Left Half Open(out) = 11
+                                # Right Half Open(in) = 10
+                            elif left_hand:
+                                cv2.putText(image, "Half Open(in)", (450, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                                            (0, 0, 0), 3)
+                                x = False
+                                Foze.write('I'.encode())
+                                # Left Half Open(in) = 11
             # 90 องศาเปิดเข้า
             if fingerCount == 5:
                 if not (left_hand and right_hand):
                     if right_hand:
-                        cv2.putText(image, "Open All(in)", (490, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
-                                    (0, 0, 0), 3)
-                        x = False
-                        Foze.write('K'.encode())
-                        # 'Right Open All(in) = 12
-                    elif left_hand:
-                        cv2.putText(image, "Open All(in)", (490, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                        cv2.putText(image, "Open All(out)", (490, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
                                     (0, 0, 0), 3)
                         x = False
                         Foze.write('L'.encode())
-                        # Left Open All(in) = 13
+                        # 'Right Open All(out) = 12
+                    elif left_hand:
+                        cv2.putText(image, "Open All(out)", (490, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
+                                    (0, 0, 0), 3)
+                        x = False
+                        Foze.write('K'.encode())
+                        # Left Open All(out) = 13
             # ปิด
             if fingerCount == 1:
                 if handLandmarks[8][1] < handLandmarks[6][1]:
                     if not (left_hand and right_hand):
                         if right_hand:
-                            cv2.putText(image, "Close", (560, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
-                                        (0, 0, 0), 3)
                             x = False
                             Foze.write('z'.encode())
                             # Right Close = 14
                         elif left_hand:
-                            cv2.putText(image, "Close", (560, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
-                                        (0, 0, 0), 3)
                             x = False
                             Foze.write('z'.encode())
                             # Left Close = 15
                             
             if x:
-                cv2.putText(image, "???", (470, 30), cv2.FONT_HERSHEY_PLAIN, 1.5,
-                                        (0, 0, 0), 3)
                 Foze.write('z'.encode())
                 
         cv2.putText(image, str(fingerCount), (50, 450),
