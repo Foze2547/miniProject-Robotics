@@ -140,6 +140,7 @@ with mp_hands.Hands(
             if fingerCount == 2:
                 if handLandmarks[8][1] < handLandmarks[6][1]:
                     if (left_hand and right_hand):
+                        break
                         x = False
                         Foze.write('z'.encode())
                         # All Close = 5
