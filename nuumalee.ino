@@ -109,7 +109,7 @@ void setup() {
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
     // stop the tone playing:
-    noTone(8);
+    noTone(12);
   }
 }
 void loop() {
