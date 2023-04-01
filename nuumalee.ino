@@ -88,30 +88,27 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
 
-int melody[] = {
-  NOTE_E4, NOTE_D4, NOTE_C4, NOTE_D4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_D4, NOTE_E4,  NOTE_G4, NOTE_G4,
-  NOTE_E4, NOTE_D4, NOTE_C4, NOTE_D4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_E4, NOTE_D4,  NOTE_C4
-};
-// note durations: 4 = quarter note, 8 = eighth note, etc.:
-int noteDurations[] = {
-  3, 6, 4, 4, 4, 4, 2, 4, 4, 2,     4, 4, 2,
-  3, 6, 4, 4, 4, 4, 2, 4, 4, 3,     3, 1 };
-void setup() {
-  // iterate over the notes of the melody:
+int buzzerPin = 12;
+
+void setup(){
+}
+
+void nuumalee() {
+  int melody[] = {
+    NOTE_E4, NOTE_D4, NOTE_C4, NOTE_D4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_D4, NOTE_E4,  NOTE_G4, NOTE_G4,
+    NOTE_E4, NOTE_D4, NOTE_C4, NOTE_D4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_E4, NOTE_D4,  NOTE_C4
+  };
+  int noteDurations[] = {
+    3, 6, 4, 4, 4, 4, 2, 4, 4, 2,     4, 4, 2,
+    3, 6, 4, 4, 4, 4, 2, 4, 4, 3,     3, 1 };
   for (int thisNote = 0; thisNote < 25; thisNote++) {
-    // to calculate the note duration, take one second 
-    // divided by the note type.
-    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
     int noteDuration = 1000/noteDurations[thisNote];
-    tone(12, melody[thisNote],noteDuration);
-    // to distinguish the notes, set a minimum time between them.
-    // the note's duration + 30% seems to work well:
+    tone(buzzerPin, melody[thisNote],noteDuration);
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
-    // stop the tone playing:
-    noTone(12);
+    noTone(buzzerPin);
   }
 }
 void loop() {
-  // no need to repeat the melody.
+  nuumalee();
 }
