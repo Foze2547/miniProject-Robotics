@@ -122,6 +122,7 @@ bool watervo = false;
 bool Door = false;
 bool Day = false;
 bool XX = false;
+bool Night = false;
 boolean prevBtnStatus = LOW;
 
 void A(bool x){
@@ -417,7 +418,14 @@ void loop() {
       Day = true;
     }else{
     if(ledState == HIGH and Door == false){
-      G(servo);
+      if(Night == false){
+        G(servo);
+        Night = true;
+      }
+      else if(Night == true){
+        H(servo);
+        Night = false;
+      }
       digitalWrite(ledPinGreen, HIGH);
       digitalWrite(ledPinRed, LOW);
       digitalWrite(ledPinYellow, LOW);
@@ -427,7 +435,12 @@ void loop() {
      }
     }
     if(ledState == LOW and Door == true){
-      K(servo);
+      if(Night == true){
+        K(servo);
+      }
+      else if(Night == false){
+        L(servo);
+      }
       digitalWrite(ledPinGreen, LOW);
       digitalWrite(ledPinRed, HIGH);
       digitalWrite(ledPinYellow, LOW);
@@ -572,6 +585,7 @@ void loop() {
     if(watervo == false){
       B(servo);
     }
+    //Door = true;
     nuumalee();
     watervo = true;      
   }else if(UltrasonicSensor()<=8){
@@ -579,6 +593,7 @@ void loop() {
     Buzzer();
     if(watervo == false){
       B(servo);
+      //Door = true;
     }
     watervo = true;
   }
